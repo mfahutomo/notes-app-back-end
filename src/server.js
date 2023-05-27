@@ -8,7 +8,8 @@ const init = async () => {
   // Membuat instance server Hapi dengan konfigurasi
   const server = Hapi.server({
     port: 5000, // Menentukan port server
-    host: 'localhost', // Menentukan host server
+    // host: 'localhost' Menentukan host server
+    host: process.env.NODE_ENV !== 'production' ? 'localhost' : '0.0.0.0',
     routes: {
       cors: {
         origin: ['*'], // Mengaktifkan CORS untuk menerima permintaan dari semua origin
@@ -27,4 +28,3 @@ const init = async () => {
 
 // Memanggil fungsi init untuk menjalankan server
 init();
-
