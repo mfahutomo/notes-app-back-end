@@ -19,6 +19,7 @@
   },
   "dependencies": {
     "@hapi/hapi": "^21.3.2",
-    "nanoid": "^3.3.6"
+    "nanoid": "^3.3.6",
+    "postman-sandbox": "^4.1.3"
   }
 }

@@ -1,4 +1,5 @@
 const { nanoid } = require('nanoid');
+const { getEnvironmentVariable, setEnvironmentVariable } = require('postman-sandbox');
 const notes = require('./notes');
 
 // Handler untuk menambahkan catatan baru
@@ -24,6 +25,18 @@ const addNoteHandler = (request, h) => {
 
   // Memeriksa apakah catatan berhasil ditambahkan
   const isSuccess = notes.filter((note) => note.id === id).length > 0;
+  // Menyimpan ID ke dalam variabel lingkungan (environment)
+  const noteIdVariable = 'noteId'; // Nama variabel lingkungan untuk menyimpan ID
+  const currentNoteId = getEnvironmentVariable(noteIdVariable); // to get nilai current is from env
+
+  // Mengecek apakah ID saat ini tidak ada atau kosong
+  if (!currentNoteId) {
+  // Jika ID kosong, mengatur nilai ID baru
+    setEnvironmentVariable(noteIdVariable, id);
+  } else {
+  // Jika ID sudah ada, menambahkan ID baru dengan pemisah koma
+    setEnvironmentVariable(noteIdVariable, `${currentNoteId},${id}`);
+  }
 
   // Mengembalikan response berdasarkan keberhasilan menambahkan catatan
   if (isSuccess) {
